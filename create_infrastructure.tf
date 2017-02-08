@@ -11,6 +11,7 @@ resource "openstack_networking_subnet_v2" "Infra_Subnet" {
   cidr = "10.1.1.0/24"
   dns_nameservers = ["10.20.20.1", "8.8.8.8"]
   ip_version = 4
+#  enable_dhcp = false
 }
 
 # Create a Router
