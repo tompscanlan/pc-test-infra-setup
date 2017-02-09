@@ -20,13 +20,14 @@
 ##  }
 #}
 resource "openstack_compute_floatingip_v2" "Slave1_ip" {
-#    count = 2
+    depends_on = ["openstack_networking_network_v2.Infra_Network", "openstack_networking_subnet_v2.Infra_Subnet", "openstack_networking_router_v2.Infra_Router", "openstack_networking_router_interface_v2.Infra_Router_Infra_Network"]
+    count = 2
     pool = "ext-net"
 }
 # Create a Jenkins Slave
 resource "openstack_compute_instance_v2" "Slave1" {
   depends_on = ["openstack_compute_floatingip_v2.Slave1_ip","openstack_networking_network_v2.Infra_Network", "openstack_networking_subnet_v2.Infra_Subnet", "openstack_networking_router_v2.Infra_Router", "openstack_networking_router_interface_v2.Infra_Router_Infra_Network", "openstack_compute_keypair_v2.jenkins_master" ]
-#  count = 2
+  count = 2
   name = "slave1"
 #  image_id = "adc1687e-18ce-46c1-85f8-8f6392846608"
   image_id = "728d255d-7d19-4c0b-a235-1c6eb3130057"
@@ -37,9 +38,9 @@ resource "openstack_compute_instance_v2" "Slave1" {
 #    port = "${openstack_networking_port_v2.port_1.id}"
     uuid = "${openstack_networking_network_v2.Infra_Network.id}"
     name = "Infra_Network"
-    fixed_ip_v4 = "10.1.1.10"
-#    floating_ip = "${format("openstack_compute_floatingip_v2.Slave1_ip.%d.address", count.index)}"
-    floating_ip = "${openstack_compute_floatingip_v2.Slave1_ip.address}"
+#    fixed_ip_v4 = "10.1.1.10"
+    floating_ip = "${element(openstack_compute_floatingip_v2.Slave1_ip.*.address, count.index)}"
+#    floating_ip = "${openstack_compute_floatingip_v2.Slave1_ip.address}"
   }
 #  network {
 #    access_network = true
@@ -48,18 +49,20 @@ resource "openstack_compute_instance_v2" "Slave1" {
 
 output "out" {
 #  value = "${format("%s -- %s", openstack_compute_floatingip_v2.Slave1_ip.1.address,openstack_compute_floatingip_v2.Slave1_ip.0.address)}"
-  value = "${openstack_compute_floatingip_v2.Slave1_ip.address}"
+  value = ["${openstack_compute_floatingip_v2.Slave1_ip.*.address}"]
 }
 
 # Create Worker for Jenkin's Slave
 resource "openstack_compute_instance_v2" "Worker1" {
+  depends_on = ["openstack_networking_network_v2.Infra_Network", "openstack_networking_subnet_v2.Infra_Subnet", "openstack_networking_router_v2.Infra_Router", "openstack_networking_router_interface_v2.Infra_Router_Infra_Network", "openstack_compute_keypair_v2.jenkins_master" ]
+  count = 2
   name = "worker1"
   image_id = "a6b5495f-046c-42d5-84be-3572d8c9f463"
   flavor_name = "ESXi-4vcpu-32mem-50gb"
 
   network {
 #    port = "${openstack_networking_port_v2.port_2.id}"
-    fixed_ip_v4 = "10.1.1.11"
+#    fixed_ip_v4 = "10.1.1.11"
     uuid = "${openstack_networking_network_v2.Infra_Network.id}"
     name = "Infra_Network"
   }
