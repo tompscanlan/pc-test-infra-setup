@@ -35,3 +35,4 @@ variable "tenant_network" {
     description = "The network to be used."
     default  = "network_1"
 }
+# Variable File
