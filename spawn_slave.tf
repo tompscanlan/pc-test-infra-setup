@@ -47,10 +47,16 @@ resource "openstack_compute_instance_v2" "Slave1" {
 #  }
 }
 
-output "out" {
-#  value = "${format("%s -- %s", openstack_compute_floatingip_v2.Slave1_ip.1.address,openstack_compute_floatingip_v2.Slave1_ip.0.address)}"
+output "FIPs" {
   value = ["${openstack_compute_floatingip_v2.Slave1_ip.*.address}"]
 }
+output "SlaveIps" {
+  value = ["${openstack_compute_instance_v2.Slave1.*.access_ip_v4}"]
+  }
+
+output "WorkerIps" {
+  value = ["${openstack_compute_instance_v2.Worker1.*.access_ip_v4}"]
+  }
 
 # Create Worker for Jenkin's Slave
 resource "openstack_compute_instance_v2" "Worker1" {
