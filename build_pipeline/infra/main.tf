@@ -78,3 +78,30 @@ output "slave-worker-pair2" {
     "${module.slave-worker-pair2.SlaveIP}",
     "${module.slave-worker-pair2.WorkerIP}"]
 }
+
+
+module "slave-worker-pair4" {
+  source = "../../modules/slave-worker-pair-VMs"
+  slave_name = "slave04"
+  worker_name = "worker04"
+
+# ------------ Infrastructure Credentials ------------
+  network_id = "${module.Infra.get_network_id}"
+  external_network = "${module.Infra.get_ext_pool_id}"
+  openstack_user_name = "${module.Infra.get_openstack_user_name}"
+  openstack_tenant_name = "${module.Infra.get_openstack_tenant_name}"
+  openstack_domain_id = "${module.Infra.get_openstack_domain_id}"
+  openstack_password = "${module.Infra.get_openstack_password}"
+  openstack_auth_url = "${module.Infra.get_openstack_auth_url}"
+  openstack_insecure = "${module.Infra.get_openstack_insecure}"
+
+
+  openstack_keypair_name = "${module.Infra.get_openstack_keypair_name}"
+  openstack_keypair_public_key = "${module.Infra.get_openstack_keypair_public_key}"
+}
+output "slave-worker-pair4" {
+    value = ["${module.slave-worker-pair4.FIP}",
+    "${module.slave-worker-pair4.SlaveIP}",
+    "${module.slave-worker-pair4.WorkerIP}"]
+}
+
