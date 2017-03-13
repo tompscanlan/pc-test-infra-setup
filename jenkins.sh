@@ -4,11 +4,13 @@ set -x
 set -e
 pwd
 
-echo "Setup terraform"
-wget -N -nv https://releases.hashicorp.com/terraform/0.8.6/terraform_0.8.6_linux_amd64.zip
-unzip -o terraform_0.8.6_linux_amd64.zip
-
+tf_version=0.8.8
 tf=`pwd`/terraform
+
+echo "Setup terraform"
+wget -N -nv https://releases.hashicorp.com/terraform/$tf_version/terraform_${tf_version}_linux_amd64.zip
+unzip -o terraform_${tf_version}_linux_amd64.zip
+
 chmod +x $tf
 
 echo "run terraform"
