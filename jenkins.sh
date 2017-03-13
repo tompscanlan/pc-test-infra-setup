@@ -16,3 +16,7 @@ cd build_pipeline/infra
 $tf get
 $tf plan
 git status
+
+git add terraform.tfstate terraform.tfstate.backup
+git commit -m "jenkins auto-commit"
+
