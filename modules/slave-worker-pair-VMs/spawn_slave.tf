@@ -71,7 +71,7 @@ resource "openstack_compute_instance_v2" "Worker1" {
 #  count = 2
   name = "${var.worker_name}"
   image_id = "a6b5495f-046c-42d5-84be-3572d8c9f463"
-  flavor_name = "ESXi-4vcpu-32mem-50gb"
+  flavor_name = "ESXi-4vcpu-16-200G"
 
   network {
 #    port = "${openstack_networking_port_v2.port_2.id}"

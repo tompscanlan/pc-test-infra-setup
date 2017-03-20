@@ -12,6 +12,12 @@ resource "openstack_networking_subnet_v2" "Infra_Subnet" {
   dns_nameservers = ["10.20.20.1", "8.8.8.8"]
   ip_version = 4
 #  enable_dhcp = false
+  allocation_pools = [
+    {
+      start = "10.1.1.100"
+      end = "10.1.1.250"
+    }
+  ]
 }
 
 # Create a Router
