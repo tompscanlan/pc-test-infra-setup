@@ -45,3 +45,8 @@ variable "external_network" {
   description = "Name of External Network"
   default = "ext-net"
 }
+
+variable "subnets_count" {
+    description = "How many subnets to setup."
+    default = 5
+}

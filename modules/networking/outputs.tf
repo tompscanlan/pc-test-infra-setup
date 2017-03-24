@@ -2,7 +2,7 @@
 # This file exports all the infra related variable in order to create VM later on
 
 output "get_network_id" {
-  value = "${openstack_networking_network_v2.Infra_Network.id}"
+  value = "${openstack_networking_network_v2.main_network.id}"
 }
 
 output "get_ext_pool_id" {
@@ -38,4 +38,8 @@ output "get_openstack_keypair_name" {
 }
 output "get_openstack_keypair_public_key" {
   value = "${var.openstack_keypair_public_key}"
+}
+
+output "get_subnets_count" {
+  value = "${var.subnets_count}"
 }

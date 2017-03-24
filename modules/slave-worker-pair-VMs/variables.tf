@@ -48,3 +48,7 @@ variable "openstack_auth_url" {
 variable "openstack_insecure" {
     description = "Do Not verify Cerificate Authority"
 }
+variable "pairs_count" {
+    description = "Number of Pairs to manage"
+    description = 5
+}
