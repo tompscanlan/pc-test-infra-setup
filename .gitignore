@@ -1,0 +1,6 @@
+build_pipeline/infra/.terraform/
+**/*.tfstate.backup
+**/*.tfstate.*.backup
+terraform_*.zip
+terraform
+.idea
